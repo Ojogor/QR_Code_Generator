@@ -39,18 +39,35 @@ mode = "alphanumeric"
 
 G = np.zeros((25,25,3))
 
+def isInside(x, y):
+    if(x>=0 and x<25 and y>=0 and y<25):
+        return True
+    return False
+
 def draw_square(starting_pos, length, color):
     for i in range(length):
-        if(starting_pos[1]>=0):
+        if(isInside(starting_pos[0]+i, starting_pos[1])):
             G[starting_pos[0]+i] [starting_pos[1]] = color
-        if(starting_pos[1]+length<=25):
+        if(isInside(starting_pos[0]+i, starting_pos[1]+length-1)):
             G[starting_pos[0]+i] [starting_pos[1]+length-1] = color
-        if(starting_pos[0]>=0):
+        if(isInside(starting_pos[0], starting_pos[1]+i)):
             G[starting_pos[0]] [starting_pos[1]+i] = color
-        if(starting_pos[0]+length<=25):
+        if(isInside(starting_pos[0]+length-1, starting_pos[1]+i)):
             G[starting_pos[0]+length-1] [starting_pos[1]+i] = color
 
-draw_square((1,1), 5, [1, 1, 1])
-draw_square((1,19), 5, [1, 1, 1])
+#inner squares
+draw_square((1,1), 5, [1, 1, 1]) #top left
+draw_square((1,19), 5, [1, 1, 1]) #top right
+
+#outer squares
+draw_square((-1,-1), 9, [1, 1, 1]) #top left
+draw_square((-1,17), 9, [1, 1, 1]) #top right
+
+#bottom left squares
+draw_square((19,1), 5, [1, 1, 1])
+draw_square((17,-1), 9, [1, 1, 1])
+
+#small square
+draw_square((17,17), 3, [1, 1, 1])
 plt.matshow(G)
 plt.show()
